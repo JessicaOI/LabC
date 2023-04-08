@@ -1,31 +1,31 @@
-import regex
+def reescribir_archivo(input_text):
+    lines = input_text.split("\n")
+    variables = {}
+    
+    for line in lines:
+        if line.startswith("let"):
+            var_name, value = line[4:].split(" = ")
+            variables[var_name] = value.strip("'")
+
+    for var_name, value in variables.items():
+        for dependent_var in variables:
+            variables[dependent_var] = variables[dependent_var].replace(var_name, f"({value})")
+
+    output_lines = []
+    for var_name, value in variables.items():
+        output_lines.append(f"let {var_name} = '{value}'")
+
+    return "\n".join(output_lines)
 
 
-def parse_yalex(file_path):
-    regular_definitions = {}
+def get_values_list(rewritten_text):
+    lines = rewritten_text.split("\n")
+    values_list = []
 
-    with open(file_path, "r") as file:
-        for line in file:
-            if line.startswith("let"):
-                definition, expression = line.strip().split(" = ")
-                definition = definition[4:]
-                regular_definitions[definition] = expression
+    for line in lines:
+        if line.startswith("let"):
+            _, value = line.split(" = ")
+            value = value.strip("'")
+            values_list.append(value)
 
-    return regular_definitions
-
-
-def generate_automata(regular_definitions):
-    automata = {}
-    for token, definition in regular_definitions.items():
-        automata[token] = regex.compile(definition)
-
-    return automata
-
-
-def automata_to_state_diagram(automata):
-    state_diagrams = {}
-    for token, pattern in automata.items():
-        state_diagrams[token] = pattern.pattern
-
-    return state_diagrams
-
+    return values_list
