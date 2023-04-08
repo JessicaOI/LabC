@@ -4,6 +4,7 @@ import numpy as np
 from copy import deepcopy
 from graphviz import Digraph
 import re
+import datetime
 
 
 #stack para hacer las acciones del postfix
@@ -122,10 +123,10 @@ class AFN:
             "Estado Final": self.estadoFinal,
             "transiciones": self.transiciones
         }
-        print ("estados:", self.estados)
-        print ("Estado Inicial: ", self.estadoInicial)
-        print ("Estado Final:", self.estadoFinal)
-        print ("transiciones:", self.transiciones)
+        # print ("estados:", self.estados)
+        # print ("Estado Inicial: ", self.estadoInicial)
+        # print ("Estado Final:", self.estadoFinal)
+        # print ("transiciones:", self.transiciones)
         return object
 
 def basic(input):
@@ -265,7 +266,7 @@ def conditional(afn):
 
 
 #convertir postfix a AFN
-def evaluatePostfix(regex):
+def evaluatePostfix(regex,name_output):
 
     if(len(regex) == 1):
         afn = AFN()
@@ -337,8 +338,9 @@ def evaluatePostfix(regex):
                 epsilon = str(transition["=>"])
             dot.edge(str(transition["desde"]), str(hacia), label=epsilon)
                 
+    
     # guardar archivo DOT
-    dot.render('afnfinal', format='png')
+    dot.render(name_output, format='png', cleanup=True)
 
     #print (afn)
     with open('resultadoAFN.txt', 'w') as f:
@@ -366,22 +368,23 @@ def evaluatePostfix(regex):
 
 
 #Ejecutar Todo
-def ejecutar(regex):
-    try:
+def ejecutar(regex, nombre):
+    # try:
         print('\nExpresion regular ingresada: ' + regex)
         regexprocess = reescribiendoExpr(regex)
         postfix = topostfix(regexprocess)
         print('Postfix: ' + postfix)
-        return evaluatePostfix(postfix)
-    except:
-        print("La expresion regular ingresada es incorrecta revisela y vuela a intentar")
+        return evaluatePostfix(postfix, nombre)
+    # except:
+        # print("La expresion regular ingresada es incorrecta revisela y vuela a intentar")
     
     
 
 
 # INGRESANDO EXPRESION REGULAR A TRABAJAR
 
-#result = ejecutar('0|1|2')
+result = ejecutar('(0|1|2)((0|1|2))*','afn_10')
+
 # result = ejecutar('0?(1?)?0*')
 # result = ejecutar('+a')
 # result = ejecutar('a b')
