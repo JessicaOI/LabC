@@ -383,9 +383,9 @@ def ejecutar(regex, nombre):
 
 # INGRESANDO EXPRESION REGULAR A TRABAJAR
 
-result = ejecutar('(0|1|2)((0|1|2))*','afn_10')
+# result = ejecutar('(a|b|c|A|B|C)((a|b|c|A|B|C)|(0|1|2))*','afn_10')
 
-# result = ejecutar('0?(1?)?0*')
+result = ejecutar('(0|1|2)(0|1|2)*', 'afn_example')
 # result = ejecutar('+a')
 # result = ejecutar('a b')
 # result = ejecutar('(ab)(a')

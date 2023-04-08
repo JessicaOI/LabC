@@ -14,11 +14,11 @@ def main():
     print("Resultados:")
     print(resultado)
 
-    cont = 0
-    for regex in resultado:
-        cont+=1
-        nombre = 'afn_'+str(cont)
-        ejecutar(regex, nombre)
+    # cont = 0
+    # for regex in resultado:
+    #     cont+=1
+    #     nombre = 'afn_'+str(cont)
+    #     ejecutar(regex, nombre)
 
 if __name__ == "__main__":
     main()
