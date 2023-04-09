@@ -8,6 +8,11 @@ def main():
         input_text = file.read()
 
     rewritten_text = reescribir_archivo(input_text)
+    
+    if rewritten_text is None:
+        print("Se detectaron errores en el archivo de entrada. Por favor, corrige los errores e intenta nuevamente.")
+        return
+
     print("Yalex nuevo\n" + rewritten_text)
 
     resultado = get_values_list(rewritten_text)
