@@ -164,55 +164,57 @@ def concat(nfa1, nfa2):
         return afn
 
 def union(nfa1, nfa2):
-        afn = AFN()
-        #trabaja el AFN1
-        newStates1 = np.add(np.array(list(nfa1.estados)),1)
-        maximum = max(newStates1)
-        nfa1.estadoInicial += 1
-        nfa1.estadoFinal += 1
-        for i in range(0, len(nfa1.transiciones)):
-            nfa1.transiciones[i]['desde']+= 1
-            nfa1.transiciones[i]['hacia'] = list(np.add(1, nfa1.transiciones[i]['hacia']))
-        #trabaja el AFN2
-        nfa2.estadoInicial += maximum + 1
-        nfa2.estadoFinal += maximum + 1
-        newStates2 = np.add(np.array(list(nfa2.estados)),maximum + 1)
-        for i in range(0, len(nfa2.transiciones)):
-            nfa2.transiciones[i]['desde']+= maximum + 1
-            nfa2.transiciones[i]['hacia'] = list(np.add(maximum + 1, nfa2.transiciones[i]['hacia']))
-        #trabaja el self
-        afn.estadoInicial = 0
-        afn.estadoFinal = nfa2.estadoFinal + 1
-        afn.estados.add(afn.estadoInicial)
-        for state in newStates1:
-            afn.estados.add(state)
-        for state in newStates2:
-            afn.estados.add(state)
-        afn.estados.add(afn.estadoFinal)
+    afn = AFN()
+    #trabaja el AFN1
+    newStates1 = np.add(np.array(list(nfa1.estados)),1)
+    maximum = max(newStates1)
+    nfa1.estadoInicial += 1
+    nfa1.estadoFinal += 1
+    for i in range(0, len(nfa1.transiciones)):
+        nfa1.transiciones[i]['desde']+= 1
+        nfa1.transiciones[i]['hacia'] = list(np.add(1, nfa1.transiciones[i]['hacia']))
+    #trabaja el AFN2
+    nfa2.estadoInicial += maximum + 1
+    nfa2.estadoFinal += maximum + 1
+    newStates2 = np.add(np.array(list(nfa2.estados)),maximum + 1)
+    for i in range(0, len(nfa2.transiciones)):
+        nfa2.transiciones[i]['desde']+= maximum + 1
+        nfa2.transiciones[i]['hacia'] = list(np.add(maximum + 1, nfa2.transiciones[i]['hacia']))
+    #trabaja el self
+    afn.estadoInicial = 0
+    afn.estadoFinal = max(nfa1.estadoFinal, nfa2.estadoFinal) + 1
+    afn.estados.add(afn.estadoInicial)
+    for state in newStates1:
+        afn.estados.add(state)
+    for state in newStates2:
+        afn.estados.add(state)
+    afn.estados.add(afn.estadoFinal)
 
-        initialTransition = {
-            "desde": afn.estadoInicial,
-            "=>": " ",
-            "hacia": [nfa1.estadoInicial , nfa2.estadoInicial]
-        }
-        finalTransition1 = {
-            "desde": nfa1.estadoFinal,
-            "=>": " ",
-            "hacia": [afn.estadoFinal]
-        }
-        finalTransition2 = {
-            "desde": nfa2.estadoFinal,
-            "=>": " ",
-            "hacia": [afn.estadoFinal]
-        }
-        afn.transiciones.append(initialTransition)
-        for transition in nfa1.transiciones:
-            afn.transiciones.append(transition)
-        for transition in nfa2.transiciones:
-            afn.transiciones.append(transition)       
-        afn.transiciones.append(finalTransition1)
-        afn.transiciones.append(finalTransition2)
-        return afn
+    initialTransition = {
+        "desde": afn.estadoInicial,
+        "=>": " ",
+        "hacia": [nfa1.estadoInicial , nfa2.estadoInicial]
+    }
+    finalTransition1 = {
+        "desde": nfa1.estadoFinal,
+        "=>": " ",
+        "hacia": [afn.estadoFinal]
+    }
+    finalTransition2 = {
+        "desde": nfa2.estadoFinal,
+        "=>": " ",
+        "hacia": [afn.estadoFinal]
+    }
+    afn.transiciones.append(initialTransition)
+    for transition in nfa1.transiciones:
+        afn.transiciones.append(transition)
+    for transition in nfa2.transiciones:
+        afn.transiciones.append(transition)       
+    afn.transiciones.append(finalTransition1)
+    afn.transiciones.append(finalTransition2)
+    return afn
+
+
 
 def kleene(afn):
 
@@ -383,9 +385,9 @@ def ejecutar(regex, nombre):
 
 # INGRESANDO EXPRESION REGULAR A TRABAJAR
 
-# result = ejecutar('(a|b|c|A|B|C)((a|b|c|A|B|C)|(0|1|2))*','afn_10')
+result = ejecutar('(a|b|c|A|B|C)((a|b|c|A|B|C)|(0|1|2))*','afn_10')
 
-result = ejecutar('(0|1|2)(0|1|2)*', 'afn_example')
+# result = ejecutar('0|1|2', 'afn_example')
 # result = ejecutar('+a')
 # result = ejecutar('a b')
 # result = ejecutar('(ab)(a')
