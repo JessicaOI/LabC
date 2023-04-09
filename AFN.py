@@ -72,29 +72,24 @@ def generate_mega_enfa_graph(enfas):
 
     return mega_graph
 
-# El resto del código se mantiene igual
+# def main():
+#     regex_list = [
+#         "0|1|2",
+#         "(0|1|2)((0|1|2))*",
+#         "a|b|c|A|B|C",
+#         "(a|b|c|A|B|C)((a|b|c|A|B|C)|(0|1|2))*"
+#     ]
 
+#     enfas = [regex_to_enfa(regex) for regex in regex_list]
 
-# El resto del código se mantiene igual
+#     # Graficar y guardar ENFA individuales
+#     for idx, enfa in enumerate(enfas):
+#         enfa_graph = enfa_to_graphviz(enfa)
+#         enfa_graph.render(f"enfa_output_{idx}", view=True)
 
-def main():
-    regex_list = [
-        "0|1|2",
-        "(0|1|2)((0|1|2))*",
-        "a|b|c|A|B|C",
-        "(a|b|c|A|B|C)((a|b|c|A|B|C)|(0|1|2))*"
-    ]
+#     # Generar y guardar el mega autómata
+#     mega_enfa_graph = generate_mega_enfa_graph(enfas)
+#     mega_enfa_graph.render("mega_enfa_output", view=True)
 
-    enfas = [regex_to_enfa(regex) for regex in regex_list]
-
-    # Graficar y guardar ENFA individuales
-    for idx, enfa in enumerate(enfas):
-        enfa_graph = enfa_to_graphviz(enfa)
-        enfa_graph.render(f"enfa_output_{idx}", view=True)
-
-    # Generar y guardar el mega autómata
-    mega_enfa_graph = generate_mega_enfa_graph(enfas)
-    mega_enfa_graph.render("mega_enfa_output", view=True)
-
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
